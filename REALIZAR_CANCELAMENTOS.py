@@ -9,19 +9,21 @@ from selenium.webdriver.common.by import By
 from selenium.webdriver.support.ui import Select
 
 # Nome do arquivo de saída
-output_file = 'pendentes.csv'
+output_file = 'cancelar.csv'
 
 # Abrir o navegador e acessar o site do SISREG.
 driver = webdriver.Chrome()
 driver.get("https://sisregiii.saude.gov.br/")
 
 # Adicionando informações de login e senha.
-user = '5408989FRANKLIN'
-password = '555555Aa'
+user = ''
+password = ''
 driver.find_element(By.NAME, "usuario").send_keys(user)
 driver.find_element(By.NAME, "senha").send_keys(password)
 driver.find_element(By.NAME, "entrar").click()
 
+# Adionar a justificativa de cada cancelamento.
+justificativa_cancelamento = ''
 
 # Abrir o arquivo pendentes.csv para leitura
 with open(output_file, mode='r', encoding='utf-8') as csvfile:
@@ -40,7 +42,6 @@ with open(output_file, mode='r', encoding='utf-8') as csvfile:
         time.sleep(1)
         try:
             driver.find_element(By.NAME, "chk_0").click()
-            justificativa_cancelamento = 'Paciente não compareceu ao exame.'
             driver.find_element(By.NAME, "justificativa").send_keys(justificativa_cancelamento)
             time.sleep(1)
             driver.find_element(By.XPATH, '//*[@id="main_page"]/form/center/table[3]/tbody/tr[1]/td/table/tbody/tr[4]/td/input').click()
